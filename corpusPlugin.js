@@ -10,8 +10,7 @@ export const corpusPlugin = {
   name: 'Corpus',
 
   init(jsep) {
-    const { OPAREN_CODE, CPAREN_CODE, addUnaryOp, addIdentifierChar, hooks } =
-      jsep;
+    const { addUnaryOp, addIdentifierChar, hooks } = jsep;
 
     const identifyOpsAsChars = getIdentifyOpsAsChars(addIdentifierChar);
 
@@ -24,41 +23,39 @@ export const corpusPlugin = {
     // 增加')'
     addIdentifierChar(')');
 
-    // '()' 栈
-    const stack = [];
+    let parenCount = 0;
+    let maxParenCount = 0;
 
+    /**
+     * this.expr 带解析字段
+     * this.index 指针
+     * this.code = this.expr.charCodeAt(this.index)
+     * this.char = this.expr.charAt(this.index)
+     */
     hooks.add('gobble-token', function (env) {
-      if (this.code === OPAREN_CODE) {
-        this.index++;
-        const properties = [];
+      const { char, expr, code } = this;
+      const properties = char;
 
-        while (!isNaN(this.code)) {
-          this.gobbleSpaces();
+      switch (char) {
+        case '(':
+          this.index++;
+          break;
+        case ')':
+          console.log(1);
+          this.index++;
+          break;
+        default:
+          this.index++;
+          env.node = this.gobbleTokenProperty({
+            type: OBJECT_EXP,
+            properties,
+          });
+          break;
+      }
 
-          if (this.code === CPAREN_CODE) {
-            this.index++;
-            env.node = this.gobbleTokenProperty({
-              type: OBJECT_EXP,
-              properties,
-            });
-            return;
-          }
-
-          // Note: using gobbleExpression instead of gobbleToken to support object destructuring
-          const key = this.gobbleExpression();
-          if (!key) {
-            break;
-          }
-
-          this.gobbleSpaces();
-          properties.push(key);
-
-          // if (this.code === jsep.COMMA_CODE) {
-          //   this.index++;
-          // }
-        }
-        // 如果需要抛出'()'不匹配异常
-        // this.throwError('missing )');
+      if (this.index >= expr.length) {
+        parenCount = 0;
+        maxParenCount = 0;
       }
     });
   },

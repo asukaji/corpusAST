@@ -3,6 +3,6 @@ import { corpusPlugin } from './corpusPlugin.js';
 
 Jsep.plugins.register(corpusPlugin);
 
-const text = '((+ast))';
+const text = '(asdasdas))';
 
 console.log(JSON.stringify(Jsep(text)));
