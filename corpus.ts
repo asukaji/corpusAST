@@ -7,9 +7,7 @@ const OBJECT_EXP = 'ObjectExpression';
 const PROPERTY = 'Property';
 
 export const corpusPlugin = {
-  name: 'Corpus',
-
-  assignmentOperators: new Set(['(', '((', '(((', ')', '))', ')))']),
+  name: 'corpus',
 
   init(jsep) {
     const { addUnaryOp, addIdentifierChar, hooks } = jsep;
@@ -29,35 +27,36 @@ export const corpusPlugin = {
     let maxParenCount = 0;
 
     /**
-     * this.expr 待解析字段
+     * this.expr 带解析字段
      * this.index 指针
      * this.code = this.expr.charCodeAt(this.index)
      * this.char = this.expr.charAt(this.index)
      */
-    // hooks.add('gobble-token', function (env) {
-    //   const properties = [];
+    hooks.add('gobble-token', function (env) {
+      const { char, expr, code } = this;
+      const properties = char;
 
-    //   console.log(this.char, this.code);
-    //   while (!isNaN(this.code)) {
-    //     console.log(this.char);
-    //     this.gobbleSpaces();
+      switch (char) {
+        case '(':
+          this.index++;
+          break;
+        case ')':
+          console.log(1);
+          this.index++;
+          break;
+        default:
+          this.index++;
+          env.node = this.gobbleTokenProperty({
+            type: OBJECT_EXP,
+            properties,
+          });
+          break;
+      }
 
-    //     if (this.char === '(') {
-    //       this.index++;
-    //       env.node = this.gobbleTokenProperty({
-    //         type: OBJECT_EXP,
-    //         properties,
-    //       });
-    //       return;
-    //     }
-
-    //     // const key = this.gobbleExpression();
-    //     // if (!key) {
-    //     //   break; // missing }
-    //     // }
-
-    //     this.index++;
-    //   }
-    // });
+      if (this.index >= expr.length) {
+        parenCount = 0;
+        maxParenCount = 0;
+      }
+    });
   },
 };
