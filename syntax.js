@@ -6,7 +6,7 @@ import object from '@jsep-plugin/object';
 Jsep.plugins.register(comma);
 // Jsep.plugins.register(object);
 
-const text = '大 师 作品 大 师';
+const text = '大 师,作品，大 师';
 
 // const text = '{asd: { qwe: "123"}}';
 
