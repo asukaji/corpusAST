@@ -18,8 +18,10 @@ const plugin = {
     jsep.addIdentifierChar(' ')
 
     // 扩展jsep以支持逗号分隔的多个表达式
-    jsep.addUnaryOp(',');
-    jsep.addUnaryOp('，');
+    jsep.addBinaryOp(',');
+    jsep.addBinaryOp('，');
+    jsep.addBinaryOp('(');
+    jsep.addBinaryOp(')');
 
     // 定义处理逗号分隔的表达式的函数
     jsep.hooks.add('gobble-token', function (left) {
