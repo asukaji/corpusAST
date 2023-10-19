@@ -3,7 +3,7 @@ function getIdentifyOpsAsChars(addIdentifierChar) {
     toArray(ops).forEach((operate) => addIdentifierChar(operate));
 }
 
-const identifierChars = ['(', ')', '{', '}', '[', ']'];
+const identifierChars = ['{', '}', '[', ']'];
 
 const plugin = {
   name: 'comma-split',
@@ -18,10 +18,13 @@ const plugin = {
     jsep.addIdentifierChar(' ')
 
     // 扩展jsep以支持逗号分隔的多个表达式
-    jsep.addBinaryOp(',');
-    jsep.addBinaryOp('，');
-    jsep.addBinaryOp('(');
-    jsep.addBinaryOp(')');
+    jsep.addBinaryOp(',', 1);
+    jsep.addBinaryOp('，', 1);
+    jsep.addUnaryOp('(');
+    jsep.addUnaryOp(')');
+    jsep.addBinaryOp('e0fg', 10);
+
+    console.log(jsep)
 
     // 定义处理逗号分隔的表达式的函数
     jsep.hooks.add('gobble-token', function (left) {
