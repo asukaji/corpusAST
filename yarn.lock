@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@jsep-plugin/comment@^1.0.3":
+  version "1.0.3"
+  resolved "http://npm.meitu-int.com/@jsep-plugin%2fcomment/-/comment-1.0.3.tgz#d4fe2c93dc4ca3c5e427779a5e1e31f9769d7f0c"
+  integrity sha512-vqZ9mLCBm5foLujfLEfRf+sUUbCxcZ0RQ0IZ4wGRLn2FyjeK62Uytp/Qlz0wnZt8bmAQfv6qRIPX1qngpuCmbA==
+
 "@jsep-plugin/object@^1.2.1":
   version "1.2.1"
   resolved "http://npm.meitu-int.com/@jsep-plugin%2fobject/-/object-1.2.1.tgz#f3373c09ad01447cdd8e2557b0c13d51c98c2b5b"

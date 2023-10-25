@@ -19,6 +19,7 @@ export const corpusPlugin = {
     // 将预设的符号识别为字符
     identifyOpsAsChars(jsep.unary_ops);
     identifyOpsAsChars(jsep.binary_ops);
+    addIdentifierChar(' ')
 
     // 增加'('
     addIdentifierChar('(');
